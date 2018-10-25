@@ -10,8 +10,10 @@ setup(name='pitem',
       packages=find_packages(),
       install_requires=[
           'attrs>=18.1.0',
-          'marshmallow>=3.0.0',
+          'marshmallow==3.0.0b19',
           'flask>=1.0.0',
-          'sqlalchemy>=1.2.12'
+          'sqlalchemy>=1.2.12',
+          'pyyaml',
+          'black'
       ],
       zip_safe=False)
