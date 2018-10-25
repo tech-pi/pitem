@@ -1,0 +1,14 @@
+ScanItem:
+    properties:
+        id:
+            type: integer
+            constrain: null
+        begin_position:
+            type: float
+        end_position:
+            type: float
+        is_denoise:
+            type: float
+            constrain:
+                min: 0.0
+                max: 1.0

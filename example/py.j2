@@ -1,0 +1,7 @@
+import attrs
+
+@attr.s
+class {{cls_name}}:
+{% for field in cls.fields() %}}
+    {{ field.name }} : attrs.ib(type={{field.type}}, {{ "validator=is_in_range(%f, %f)"|format(field.constrains.min, field.constrains.max) if field.constrains }})
+{% endfor %}}
