@@ -1,6 +1,7 @@
 import jinja2
 import yaml
 import sys
+import black
 
 
 def load_yaml(fn):
@@ -32,8 +33,9 @@ def type_map(s):
 
 
 class Field:
-    def __init__(self, type_, constrain=None):
-        self.type = type_map(type)
+    def __init__(self, name, type_, constrain=None):
+        self.name = name
+        self.type = type_map(type_)
         self.constrain = constrain
 
 
@@ -46,8 +48,8 @@ class Cls:
 def create_cls(data):
     name = list(data.keys())[0]
     fields_data = data[name]['properties']
-    fields = [Field(fd, fd['type'], Constrain.from_data(
-        fd.get('constrain'))) for fd in fields_data]
+    fields = [Field(n, v['type'], Constrain.from_data(
+        v.get('constrain'))) for n, v in fields_data.items()]
     return Cls(name, fields)
 
 
@@ -56,6 +58,9 @@ def render(yaml_fn, template_fn):
     d = load_yaml(yaml_fn)
     return t.render(cls=create_cls(d))
 
+
 if __name__ == "__main__":
-    print(argv)
-    # result = render(sys.argv[0], sys.argv[1])
+    # print(sys.argv)
+    result = render(sys.argv[1], sys.argv[2])
+    with open(sys.argv[3], "w") as fout:
+        print(black.format_str(result, 80), file=fout)
